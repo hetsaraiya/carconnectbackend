@@ -8,3 +8,4 @@ jsonschema==4.21.1
 phonenumbers==8.13.31
 whitenoise==6.6.0
 gunicorn==21.2.0
+geopy=2.4.1
