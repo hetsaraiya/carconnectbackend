@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-z7b3vpd5u&5uy7lf1dz)m71jwzj-j#u-^x*_t&l!xtdic@##da"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*', "https://8000-monospace-car-connect-1708800829495.cluster-22qpi2wzsjc4utjzyqn2yu6ar6.cloudworkstations.dev"]
 
