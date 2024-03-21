@@ -183,9 +183,8 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static/css'),
     os.path.join(BASE_DIR, 'static/admin'),
     os.path.join(BASE_DIR, 'static/rest_framework'),
-    os.path.join(BASE_DIR, 'static/img'),
     os.path.join(BASE_DIR, 'static/js'),
-    os.path.join(BASE_DIR, 'static/media'),
-    os.path.join(BASE_DIR, 'static/staticfiles'),
-    # Remove 'media' directory from STATICFILES_DIRS
+    os.path.join(BASE_DIR, 'static/fonts'),
+    os.path.join(BASE_DIR, 'static/img'),
+    os.path.join(BASE_DIR, 'static/docs'),
 ]
