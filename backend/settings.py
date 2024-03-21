@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+import os
 from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -171,3 +172,20 @@ REST_AUTH = {
     "LOGIN_SERIALIZER" : "api.serializers.NewLoginSerializer",
     "REGISTER_SERIALIZER": "api.serializers.NewRegisterSerializer",
 }
+
+
+STATIC_URL = '/static/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'static/css'),
+    os.path.join(BASE_DIR, 'static/admin'),
+    os.path.join(BASE_DIR, 'static/rest_framework'),
+    os.path.join(BASE_DIR, 'static/img'),
+    os.path.join(BASE_DIR, 'static/js'),
+    os.path.join(BASE_DIR, 'static/media'),
+    os.path.join(BASE_DIR, 'static/staticfiles'),
+    # Remove 'media' directory from STATICFILES_DIRS
+]
