@@ -10,7 +10,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
-import os
 from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,13 +24,15 @@ SECRET_KEY = "django-insecure-z7b3vpd5u&5uy7lf1dz)m71jwzj-j#u-^x*_t&l!xtdic@##da
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*', "https://8000-monospace-car-connect-1708800829495.cluster-22qpi2wzsjc4utjzyqn2yu6ar6.cloudworkstations.dev"]
 
 CORS_ALLOWED_ORIGINS = [
-    "https://carconnectbackend.onrender.com"
+    'https://example.com',
+    'http://localhost:3000',
+    'https://8000-monospace-car-connect-1708800829495.cluster-22qpi2wzsjc4utjzyqn2yu6ar6.cloudworkstations.dev',
     # Add more origins as needed
 ]
-CSRF_TRUSTED_ORIGINS = ['https://carconnectbackend.onrender.com']
+CSRF_TRUSTED_ORIGINS = ['https://8000-monospace-car-connect-1708800829495.cluster-22qpi2wzsjc4utjzyqn2yu6ar6.cloudworkstations.dev']
 
 # Application definition
 
@@ -62,8 +63,6 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "allauth.account.middleware.AccountMiddleware",
     "django.middleware.common.CommonMiddleware",
-    "django.middleware.security.SecurityMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -93,6 +92,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "backend.wsgi.application"
 
+CORS_ALLOWED_ORIGINS = [
+    "http://180.180.3.70:8000",
+]
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
@@ -144,7 +146,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-# STATIC_URL = "static/"
+STATIC_URL = "static/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -169,12 +171,3 @@ REST_AUTH = {
     "LOGIN_SERIALIZER" : "api.serializers.NewLoginSerializer",
     "REGISTER_SERIALIZER": "api.serializers.NewRegisterSerializer",
 }
-
-STATIC_URL = '/static/'
-# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-# MEDIA_URL = '/media/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static/rest_framework'),
-    os.path.join(BASE_DIR, 'static/admin'),
-]
