@@ -66,6 +66,8 @@ MIDDLEWARE = [
     "allauth.account.middleware.AccountMiddleware",
     "django.middleware.common.CommonMiddleware",
     "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
@@ -189,4 +191,4 @@ REST_FRAMEWORK = {
     ]
 }
 
-STATIC_ROOT = '/static/'
+STATIC_ROOT = BASE_DIR / "static"
