@@ -188,3 +188,5 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication', # for fluttrt
     ]
 }
+
+STATIC_ROOT = '/static/'
