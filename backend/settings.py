@@ -10,8 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
-import os
 from pathlib import Path
+import os
+from rest_framework.authentication import TokenAuthentication
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -78,7 +79,7 @@ ROOT_URLCONF = "backend.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": ['templates'],
+        "DIRS": [],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -107,14 +108,18 @@ DATABASES = {
     }
 }
 
+AUTHENTICATION_BACKENDS = [
+    'allauth.account.auth_backends.AuthenticationBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
 
-DEFAULT_AUTHENTICATION_CLASSES: [
-        'rest_framework.authentication.TokenAuthentication',
-] # type: ignore
+# DEFAULT_AUTHENTICATION_CLASSES: [
+#         'rest_framework.authentication.TokenAuthentication',
+# ] # type: ignore
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -173,17 +178,13 @@ REST_AUTH = {
     "REGISTER_SERIALIZER": "api.serializers.NewRegisterSerializer",
 }
 
+REST_AUTH_SERIALIZERS = {
+    'USER_DETAILS_SERIALIZER': 'users.serializers.CustomUserDetailsSerializer',
+}
 
-STATIC_URL = '/static/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static/css'),
-    os.path.join(BASE_DIR, 'static/admin'),
-    os.path.join(BASE_DIR, 'static/rest_framework'),
-    os.path.join(BASE_DIR, 'static/js'),
-    os.path.join(BASE_DIR, 'static/fonts'),
-    os.path.join(BASE_DIR, 'static/img'),
-    os.path.join(BASE_DIR, 'static/docs'),
-]
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication', # for browser
+        'rest_framework.authentication.TokenAuthentication', # for fluttrt
+    ]
+}

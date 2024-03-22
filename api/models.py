@@ -33,8 +33,8 @@ class User(AbstractUser):
         help_text= ('Specific permissions for this user.'),
         related_name='custom_user_permissions'  # Provide a unique related_name
     )
-    MALE = 'M'
-    FEMALE = 'F'
+    MALE = 'Male'
+    FEMALE = 'Female'
     GENDER_CHOICES = [
         (MALE, 'Male'),
         (FEMALE, 'Female')
@@ -44,7 +44,7 @@ class User(AbstractUser):
     name = models.CharField(max_length=25)
     contact_number = PhoneNumberField(null=False, blank=False)
     email = models.EmailField(null=False, blank=False, unique=True)
-    gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
+    gender = models.CharField(max_length=6, choices=GENDER_CHOICES)
     presenet_loc_longitude = models.FloatField(blank=False, null=False, default=0.0)
     presenet_loc_latitude = models.FloatField(blank=False, null=False, default=0.0)
     

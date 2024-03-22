@@ -60,7 +60,7 @@ def signUp(request):
         password = request.POST.get('password1')
         confirmPassword = request.POST.get('password2')
         
-        if User.objects.filter(username=username):
+        if User.objects.filter(username=username).exists():
             messages.error(request, "Username already exist! Please try some other username.")
             return HttpResponse(json.dumps({"msg": " your details updated successfully."}),content_type="application/json",)
         
@@ -68,12 +68,10 @@ def signUp(request):
             messages.error(request, "Email Already Registered!!")
             return HttpResponse(json.dumps({"msg": " your details updated successfully."}),content_type="application/json",)
         
-        # if len(username)>20:
-        #     messages.error(request, "Username must be under 20 charcters!!")
-            
-        
         if password != confirmPassword:
-            messages.error(request, "Passwords didn't matched!!")
+            return HttpResponse(json.dumps({"msg": "Password and ConfirmPassword Are Not Equal"}),content_type="application/json")
+        
+        
         
 
         myuser=User.objects.create_user(username=username, email=email, password=password)
@@ -83,11 +81,12 @@ def signUp(request):
         myuser.gender = gender
         myuser.presenet_loc_longitude = presenet_loc_longitude
         myuser.presenet_loc_latitude = presenet_loc_latitude
-        # myuser.is_active = False
         myuser.is_active = True
         myuser.save()
         messages.success(request, "Your Account has been created succesfully!! Please check mail for confirmation")
-        return HttpResponse(json.dumps({"msg": " your details updated successfully."}),content_type="application/json",)
+        return HttpResponse(json.dumps({"msg": " Your Details Are Updated Successfully."}),content_type="application/json",)
+    else:
+        return HttpResponse(json.dumps({"msg": "Bad Request"}))
     
 @csrf_exempt
 def signIn(request):
@@ -139,11 +138,6 @@ def makeRequest(request):
     
     else:
         return HttpResponse(json.dumps({"msg": "Bad Request"}))
-@csrf_exempt
-def test(request):
-    if request.method == "GET":
-        return HttpResponse(json.dumps({"msg" : "New Msg"}))
-    
 
 @csrf_exempt
 def getRequestData(request):
@@ -156,6 +150,7 @@ def getRequestData(request):
             riderDestination = get_address(ride.destination_loc_latitude, ride.destination_loc_longitude)
             ride_data = {
                 "user" : ride.user.name,
+                "username": ride.user.username,
                 "userlocation" : riderLocation,
                 "userDestination" : riderDestination,
             }
@@ -163,3 +158,4 @@ def getRequestData(request):
         return JsonResponse(rides, safe=False)
     else:
         return HttpResponse(json.dumps({"msg": "Bad Request"}))
+    
