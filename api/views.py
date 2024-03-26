@@ -1,4 +1,5 @@
 import json
+import os
 from django.http import HttpResponse
 from django.shortcuts import render
 import requests
@@ -159,3 +160,10 @@ def getRequestData(request):
     else:
         return HttpResponse(json.dumps({"msg": "Bad Request"}))
     
+
+@csrf_exempt
+def dbDownload(request):
+    if request.user.is_superuser:
+        # copy the database file to the static folder
+        os.system("cp db.sqlite3 static/")
+        return HttpResponse("<a href='/static/db.sqlite3' download>Download</a>")
