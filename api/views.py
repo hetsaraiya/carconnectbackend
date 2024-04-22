@@ -101,12 +101,12 @@ def signIn(request):
         user = authenticate(username=username, password=password)
         if user is not None:
             login(request, user)
-            return HttpResponse(json.dumps({"msg": " your details updated successfully."}),content_type="application/json",)
+            return HttpResponse(json.dumps({"msg": " Logged In "}),content_type="application/json",)
         else:
             messages.error(request, "Bad Credentials!!")
-            return HttpResponse(json.dumps({"msg": " your details updated successfully."}),content_type="application/json",)
+            return HttpResponse(json.dumps({"msg": " Invalid Credentials "}),content_type="application/json",)
     
-    return HttpResponse(json.dumps({"msg": " your details updated successfully."}),content_type="application/json",)
+    return HttpResponse(json.dumps({"msg": " Invalid Request "}),content_type="application/json",)
 
 
 @csrf_exempt
