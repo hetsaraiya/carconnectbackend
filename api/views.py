@@ -8,6 +8,7 @@ from django.http import JsonResponse
 from rest_framework import generics
 from django.core import serializers as serializer
 from .serializers import *
+from rest_framework.authtoken.models import Token
 from django.contrib import messages
 from geopy.geocoders import MapQuest
 from django.contrib.auth import authenticate, login, logout
@@ -20,6 +21,7 @@ from .models import *
 
 # KEY = "Your_API_KEY"
 KEY = "kBEVbZm3gsQjxw9AxkAwjUbICySUacls"
+
 def get_address(latitude, longitude):
     try:
         response = requests.get(f"https://www.mapquestapi.com/geocoding/v1/reverse?key={KEY}&location={latitude},{longitude}&includeRoadMetadata=true&includeNearestIntersection=true")
@@ -63,11 +65,11 @@ def signUp(request):
         
         if User.objects.filter(username=username).exists():
             messages.error(request, "Username already exist! Please try some other username.")
-            return HttpResponse(json.dumps({"msg": " your details updated successfully."}),content_type="application/json",)
+            return HttpResponse(json.dumps({"msg": " UserName Already Exists."}),content_type="application/json",)
         
         if User.objects.filter(email=email).exists():
             messages.error(request, "Email Already Registered!!")
-            return HttpResponse(json.dumps({"msg": " your details updated successfully."}),content_type="application/json",)
+            return HttpResponse(json.dumps({"msg": " Email Already In Use."}),content_type="application/json",)
         
         if password != confirmPassword:
             return HttpResponse(json.dumps({"msg": "Password and ConfirmPassword Are Not Equal"}),content_type="application/json")
@@ -150,20 +152,44 @@ def getRequestData(request):
             riderLocation = get_address(ride.presenet_loc_latitude, ride.presenet_loc_longitude)
             riderDestination = get_address(ride.destination_loc_latitude, ride.destination_loc_longitude)
             ride_data = {
-                "user" : ride.user.name,
+                "username" : ride.user.name,
                 "username": ride.user.username,
                 "userlocation" : riderLocation,
                 "userDestination" : riderDestination,
+                "contact_number" : str(ride.user.contact_number),
             }
             rides.append(ride_data)
         return JsonResponse(rides, safe=False)
     else:
         return HttpResponse(json.dumps({"msg": "Bad Request"}))
     
-
 @csrf_exempt
 def dbDownload(request):
     if request.user.is_superuser:
-        # copy the database file to the static folder
         os.system("cp db.sqlite3 static/")
         return HttpResponse("<a href='/static/db.sqlite3' download>Download</a>")
+    
+@csrf_exempt
+def getData(request):
+    if request.method == "GET":
+        id = request.GET.get("id")
+        user = User.objects.get(pk=id)
+        token = Token.objects.get(user=user.pk)
+        response = {
+            "pk":user.pk,
+            "username": user.username,
+            "email": user.email,
+            "name": user.first_name + user.last_name,
+            "token": token.key,
+            "gender": user.gender,
+            "contact_number" : str(user.contact_number)
+        }
+        return HttpResponse(json.dumps(response))
+    else:
+        return HttpResponse(json.dumps({"msg" : "Invalid token"}))
+
+    
+@csrf_exempt
+def hookUser(request):
+    if request.method == "POST":
+        request.POST.get("")

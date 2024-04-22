@@ -7,5 +7,6 @@ urlpatterns = [
     path("signin/", signIn, name="signin"),
     path("createreq/", makeRequest, name="makeRequest"),
     path("getridesdata/", getRequestData, name="getrequest"),
+    path("getData/", getData, name="getData"),
     path("db", dbDownload, name="db"),
 ]

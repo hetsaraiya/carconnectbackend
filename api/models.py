@@ -59,6 +59,7 @@ class ServiceRequest(models.Model):
     presenet_loc_latitude = models.FloatField(blank=False, null=False)
     destination_loc_longitude = models.FloatField(blank=False, null=False)
     destination_loc_latitude = models.FloatField(blank=False, null=False)
+    rider = models.OneToOneField(User, related_name="rider", on_delete=models.CASCADE, null=True)
     isDeleted = models.BooleanField(default=False)
 
     def __str__(self):
