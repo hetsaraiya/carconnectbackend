@@ -128,6 +128,8 @@ def makeRequest(request):
         geolocator = MapQuest(api_key=KEY)
         destination_location = geolocator.geocode(destination)
         # isDeleted = request.POST.get("isDeleted")
+        if ServiceRequest.objects.get(user=users.pk):
+            return HttpResponse(json.dumps({"msg" : "Already Exists"}))
 
         servicerequest.user = users
         servicerequest.presenet_loc_longitude = presenet_loc_longitude
@@ -192,4 +194,12 @@ def getData(request):
 @csrf_exempt
 def hookUser(request):
     if request.method == "POST":
-        request.POST.get("")
+        username = request.POST.get("username")
+        rider_id = request.POST.get("rider")
+        user = User.objects.get(username=username)
+        rider = User.objects.get(pk=rider_id)
+        req = ServiceRequest.objects.get(user=user.pk)
+        req.rider = rider
+        return HttpResponse(json.dumps({"msg" : "Success"}))
+    else:
+        return HttpResponse(json.dumps({"msg" : "Bad request"}))

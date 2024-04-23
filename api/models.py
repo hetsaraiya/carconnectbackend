@@ -54,7 +54,7 @@ class User(AbstractUser):
     
 class ServiceRequest(models.Model):
     requestId = models.BigAutoField(primary_key=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, default=None)
     presenet_loc_longitude = models.FloatField(blank=False, null=False)
     presenet_loc_latitude = models.FloatField(blank=False, null=False)
     destination_loc_longitude = models.FloatField(blank=False, null=False)
