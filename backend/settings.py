@@ -100,10 +100,21 @@ CORS_ALLOWED_ORIGINS = [
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / "db.sqlite3",
+#     }
+# }
+
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'carconnect_7i8o',
+        'USER': 'carconnect_7i8o_user',
+        'PASSWORD': 'zzOprLfa6TNexUhbxxg4U1bvDDWq52Qy',
+        'HOST': 'dpg-cpjvs82cn0vc73atnb5g-a.oregon-postgres.render.com',
+        'PORT': '5432',
     }
 }
 
